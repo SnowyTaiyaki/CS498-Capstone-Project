@@ -2,7 +2,7 @@
 Collaborative project using Machine Learning (ML) to process facial recognition using an uploaded image, or ideally, a live video feed.
 
 # Libraries / Sources
-UI Development:
+UI Development:\n
 https://philippegroarke.com/posts/2018/c++_ui_solutions/
 https://www.qt.io/development
 https://wxwidgets.org/
