@@ -2,21 +2,23 @@
 Collaborative project using Machine Learning (ML) to process facial recognition using an uploaded image, or ideally, a live video feed.
 
 # Libraries / Sources
-UI Development:<br>
-https://philippegroarke.com/posts/2018/c++_ui_solutions/
-https://www.qt.io/development
-https://wxwidgets.org/
-https://github.com/Immediate-Mode-UI/Nuklear
-https://streamlit.io/
+UI Development: <br>
+https://philippegroarke.com/posts/2018/c++_ui_solutions/ <br>
+https://www.qt.io/development <br>
+https://wxwidgets.org/ <br>
+https://github.com/Immediate-Mode-UI/Nuklear <br>
+https://streamlit.io/ <br>
 
-Machine Learning:
-https://www.insightface.ai/
-https://www.qt.io/development/download-open-source#source-code
-https://github.com/Xiaoccer/MobileFaceNet_Pytorch
-https://opencv.org/
-https://github.com/exadel-inc/CompreFace
-https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file
-https://www.faceplusplus.com/face-detection/
-https://github.com/ShiqiYu/libfacedetection
-https://github.com/serengil/deepface
+<br>
+
+Machine Learning: <br>
+https://www.insightface.ai/ <br>
+https://www.qt.io/development/download-open-source#source-code <br>
+https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
+https://opencv.org/ <br>
+https://github.com/exadel-inc/CompreFace <br>
+https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
+https://www.faceplusplus.com/face-detection/ <br>
+https://github.com/ShiqiYu/libfacedetection <br>
+https://github.com/serengil/deepface <br>
 https://github.com/HyperInspire/InspireFace
