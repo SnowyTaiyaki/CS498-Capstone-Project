@@ -13,7 +13,6 @@ https://streamlit.io/ <br>
 
 Machine Learning: <br>
 https://www.insightface.ai/ <br>
-https://www.qt.io/development/download-open-source#source-code <br>
 https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
 https://opencv.org/ <br>
 https://github.com/exadel-inc/CompreFace <br>
