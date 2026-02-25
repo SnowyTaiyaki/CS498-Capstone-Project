@@ -3,12 +3,8 @@ Collaborative project using Machine Learning (ML) to process facial recognition 
 
 # Libraries / Sources
 UI Development: <br>
-https://philippegroarke.com/posts/2018/c++_ui_solutions/ <br>
 https://www.qt.io/development <br>
-https://wxwidgets.org/ <br>
-https://github.com/Immediate-Mode-UI/Nuklear <br>
-https://streamlit.io/ <br>
-
+Scope of use: QT Educational End User License, not for commericial, military, or defense use or implimentation
 <br>
 
 Machine Learning: <br>
