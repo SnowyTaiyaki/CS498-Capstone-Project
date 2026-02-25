@@ -17,3 +17,14 @@ https://www.faceplusplus.com/face-detection/ <br>
 https://github.com/ShiqiYu/libfacedetection <br>
 https://github.com/serengil/deepface <br>
 https://github.com/HyperInspire/InspireFace
+
+<br>
+TEMP: REMOVE LATER <br>
+Add to source code the following:
+
+CMake - Cross Platform Makefile Generator
+Copyright 2000-2021 Kitware, Inc. and Contributors
+All rights reserved.
+
+
+
