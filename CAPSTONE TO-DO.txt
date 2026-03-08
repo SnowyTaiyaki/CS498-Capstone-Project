@@ -1,0 +1,15 @@
+﻿Stuff to add to UI
+* Video / Picture Feed (QT Tutorial)
+* Video Button
+* Process Button
+* Results Button (For testing purposes!)
+* Allow the processing of the uploaded file with ML
+* Details, if time allows it (Do not go overboard with this -- design isn't the goal here.)
+Image Processing
+* https://github.com/Xiaoccer/MobileFaceNet_Pytorch
+* https://github.com/serengil/deepface (Built-In Anti-Spoofing (Test against it!))
+* https://www.insightface.ai/ (Used in QT Tutorial)
+* https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file (Library, may or may not use.)
+* https://cmusatyalab.github.io/openface/
+Machine Learning Stuff
+* https://dlib.net/ (Contains Image Processing and GUIs)
