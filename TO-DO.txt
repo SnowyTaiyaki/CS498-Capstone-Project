@@ -5,6 +5,7 @@
 * Results Button (For testing purposes!)
 * Allow the processing of the uploaded file with ML
 * Details, if time allows it (Do not go overboard with this -- design isn't the goal here.)
+* Database / Folder
 
 Image Processing
 * https://github.com/Xiaoccer/MobileFaceNet_Pytorch
@@ -15,3 +16,4 @@ Image Processing
 
 Machine Learning Stuff
 * https://dlib.net/ (Contains Image Processing and GUIs)
+
