@@ -16,7 +16,7 @@ https://github.com/exadel-inc/CompreFace <br>
 ### Research Paper Based:
 https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
 
-### Library
+### Library:
 https://github.com/ShiqiYu/libfacedetection <br>
 https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
 https://opencv.org/ <br>
