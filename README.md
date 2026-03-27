@@ -15,7 +15,6 @@ https://github.com/exadel-inc/CompreFace <br>
 https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
 https://www.faceplusplus.com/face-detection/ <br>
 https://github.com/ShiqiYu/libfacedetection <br>
-https://github.com/serengil/deepface <br>
 https://github.com/HyperInspire/InspireFace
 
 <br>
