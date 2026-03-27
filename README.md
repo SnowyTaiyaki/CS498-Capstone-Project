@@ -7,15 +7,19 @@ https://www.qt.io/development <br>
 Scope of use: QT Educational End User License, not for commericial, military, or defense use or implimentation
 <br>
 
-Machine Learning: <br>
+## Machine Learning:
+### Website/Company:
 https://www.insightface.ai/ <br>
-https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
-https://opencv.org/ <br>
-https://github.com/exadel-inc/CompreFace <br>
-https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
-https://www.faceplusplus.com/face-detection/ <br>
-https://github.com/ShiqiYu/libfacedetection <br>
 https://github.com/HyperInspire/InspireFace
+https://github.com/exadel-inc/CompreFace <br>
+
+### Research Paper Based:
+https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
+
+### Library
+https://github.com/ShiqiYu/libfacedetection <br>
+https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
+https://opencv.org/ <br>
 
 <br>
 TEMP: REMOVE LATER <br>
