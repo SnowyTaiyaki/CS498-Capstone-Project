@@ -10,7 +10,7 @@ Scope of use: QT Educational End User License, not for commericial, military, or
 ## Machine Learning:
 ### Website/Company:
 https://www.insightface.ai/ <br>
-https://github.com/HyperInspire/InspireFace
+https://github.com/HyperInspire/InspireFace <br>
 https://github.com/exadel-inc/CompreFace <br>
 
 ### Research Paper Based:
