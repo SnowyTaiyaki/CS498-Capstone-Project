@@ -15,6 +15,7 @@ https://github.com/exadel-inc/CompreFace <br>
 
 ### Research Paper Based:
 https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
+https://github.com/wy1iu/sphereface <br>
 
 ### Library:
 https://github.com/ShiqiYu/libfacedetection <br>
