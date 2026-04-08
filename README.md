@@ -12,6 +12,7 @@ Scope of use: QT Educational End User License, not for commericial, military, or
 https://www.insightface.ai/ <br>
 https://github.com/HyperInspire/InspireFace <br>
 https://github.com/exadel-inc/CompreFace <br>
+https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector <br>
 
 ### Research Paper Based:
 https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
