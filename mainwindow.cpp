@@ -129,29 +129,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 // Display the user's camera feed
 void MainWindow::openVideo()
 {
-    // // Create a new process for video
-    // QProcess *process = new QProcess(this);
-
-    // // Give the path to python installation
-    // QString program = "C:/Users/Julie/AppData/Local/Programs/Python/Python311/python.exe";
-
-    // // Give the path to video detection file
-    // QString script = "C:/Users/Julie/Desktop/SUNY Poly/QT/ImageGUI/videodetect.py";
-
-    // // Give args to video detection file
-    // QStringList arguments;
-    // arguments << script;
-
-    // // Start the process detached
-    // process->startDetached(program, arguments);
-
-    // // Throw error if video cannot be started
-    // if (!process->waitForStarted())
-    // {
-    //     QMessageBox::warning(this, "Error", "Failed to start video detection.");
-    //     return;
-    // }
-
     QMessageBox::information(this, "", "This is a placeholder for the video button.");
 }
 
@@ -159,64 +136,31 @@ void MainWindow::openVideo()
 void MainWindow::processImage()
 {
 
-    // Give the user an error if there is no image uploaded
-    // if (currentImagePath.isEmpty())
-    // {
-    //     QMessageBox::warning(this, "Error", "Please upload an image first.");
-    //     return;
-    // }
+    QString selectedAlgorithm = comboBox->currentText();
 
-    // // Save the output into an image file
-    // QString outputPath = "output.jpg";
-
-    // // Create a QProcess variable to call the Python function
-    // QProcess process;
-
-    // QString program = "python";
-    // QStringList arguments;
-
-    // // Use the path to the detectfaces.py file
-    // arguments << "C:/Users/Julie/Desktop/SUNY Poly/QT/ImageGUI/detectfaces.py" << currentImagePath << outputPath;
-
-    // // Start the Python program
-    // process.start(program, arguments);
-
-    // // If the process does not finish, give the user an error
-    // if (!process.waitForFinished())
-    // {
-    //     QMessageBox::warning(this, "Error", "Failed to run Python script.");
-    //     return;
-    // }
-
-    // // Get information about the file being read
-    // QByteArray output = process.readAllStandardOutput();
-    // QByteArray error = process.readAllStandardError();
-
-    // // Display that information in the debug window
-    // qDebug() << "Python output:" << output;
-    // qDebug() << "Python error:" << error;
-
-    // // Load processed image
-    // QPixmap resultPixmap(outputPath);
-
-    // // Make sure the image exists
-    // if (!resultPixmap.isNull())
-    // {
-    //     imageLabel->setPixmap(resultPixmap.scaled(
-    //         imageLabel->width(),
-    //         imageLabel->height(),
-    //         Qt::KeepAspectRatio,
-    //         Qt::SmoothTransformation
-    //         ));
-    // }
-
-    // // If the image doesn't exist, give the user an error
-    // else
-    // {
-    //     QMessageBox::warning(this, "Error", "Failed to load processed image.");
-    // }
-
-    QMessageBox::information(this, "", "This is a placeholder for the process button.");
+    switch (comboBox->currentIndex())
+    {
+    case 1:
+        // Process using Algorithm 1
+        QMessageBox::information(this, "", "This is a placeholder for Algorithm 1.");
+        break;
+    case 2:
+        // Process using Algorithm 2
+        QMessageBox::information(this, "", "This is a placeholder for Algorithm 2.");
+        break;
+    case 3:
+        // Process using Algorithm 3
+        QMessageBox::information(this, "", "This is a placeholder for Algorithm 3.");
+        break;
+    case 4:
+        // Process using Algorithm 4
+        QMessageBox::information(this, "", "This is a placeholder for Algorithm 4.");
+        break;
+    default:
+        qDebug() << "Algorithm not selected.";
+        QMessageBox::warning(this, "Error", "Please select an algorithm.");
+        return;
+    }
 }
 
 // Display the machine learning results
