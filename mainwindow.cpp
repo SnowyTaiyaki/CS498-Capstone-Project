@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QComboBox>
+#include <QLineEdit>
 
 // Initializes main window and UI components
 MainWindow::MainWindow(QWidget *parent)
@@ -34,21 +35,31 @@ MainWindow::MainWindow(QWidget *parent)
     processButton = new QPushButton("Process Image", this);
     resultsButton = new QPushButton("View Results", this);
 
-    // Create the dropdown box
+    // Create the dropdown box (combobox)
     comboBox = new QComboBox(this);
+
+    // Center the text in the combobox
+    comboBox->setEditable(true);
+    comboBox->lineEdit()->setReadOnly(true);
+    comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
+
+    // Populate the combobox
     comboBox->addItem("Select Test Algorithm");
     comboBox->addItem("Algorithm 1");
     comboBox->addItem("Algorithm 2");
     comboBox->addItem("Algorithm 3");
     comboBox->addItem("Algorithm 4");
 
-    // Add the buttons to the layout
+    // Add the buttons and combobox to the layout
     mainLayout->addWidget(imageLabel);
     mainLayout->addWidget(uploadButton);
     mainLayout->addWidget(videoButton);
     mainLayout->addWidget(comboBox);
     mainLayout->addWidget(processButton);
     mainLayout->addWidget(resultsButton);
+
+    // Space out the buttons and combobox
+    mainLayout->setSpacing(5);
 
     // Set the central widget
     setCentralWidget(centralWidget);
@@ -157,6 +168,7 @@ void MainWindow::processImage()
         QMessageBox::information(this, "", "This is a placeholder for Algorithm 4.");
         break;
     default:
+        // If no algorithm was selected, ask the user to select one.
         qDebug() << "Algorithm not selected.";
         QMessageBox::warning(this, "Error", "Please select an algorithm.");
         return;
