@@ -1,5 +1,6 @@
 import cv2
 import inspireface as isf
+import sys
 
 
 def detectFace(
@@ -21,10 +22,12 @@ def detectFace(
         draw (ndarray): Image with drawings.
         faces (list): Detected face objects.
     """
+    ret = isf.reload()
+    assert ret, "Failure to launch. Ensure resource path is correct."
 
     # Create session
     session = isf.InspireFaceSession(
-        opt=isf.HF_ENABLE_NONE,
+        isf.HF_ENABLE_NONE,
         detect_mode=isf.HF_DETECT_MODE_ALWAYS_DETECT
     )
 
@@ -70,3 +73,11 @@ def detectFace(
         cv2.destroyAllWindows()
 
     return draw, faces
+
+if __name__ == "__main__":
+
+    if len(sys.argv) > 1:
+        print("########" + sys.argv[1])
+        detectFace(sys.argv[1])
+    else:
+        detectFace("test-images/images.jpeg")
