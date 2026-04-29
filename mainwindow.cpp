@@ -152,74 +152,75 @@ void MainWindow::processImage()
 
     switch (comboBox->currentIndex())
     {
-    case 1:
-    {
-        QProcess process;
 
-        // Get executable directory
-        QDir dir(QCoreApplication::applicationDirPath());
-
-        // Move to the directory the algorithm is in
-        dir.cdUp();
-        dir.cdUp();
-
-        // Point to Python script
-        QString scriptPath = dir.filePath("HelloWorld.py");
-        scriptPath = QDir::cleanPath(scriptPath);
-
-        // Display script location
-        qDebug() << "Running Python script:";
-        qDebug() << scriptPath;
-
-        // Chcek if the script exists
-        if (!QFile::exists(scriptPath))
+        case 1:
         {
-            qDebug() << "ERROR: Script not found!";
+            QProcess process;
+
+            // Get executable directory
+            QDir dir(QCoreApplication::applicationDirPath());
+
+            // Move to the directory the algorithm is in
+            dir.cdUp();
+            dir.cdUp();
+
+            // Point to Python script
+            QString scriptPath = dir.filePath("HelloWorld.py");
+            scriptPath = QDir::cleanPath(scriptPath);
+
+            // Display script location
+            qDebug() << "Running Python script:";
+            qDebug() << scriptPath;
+
+            // Chcek if the script exists
+            if (!QFile::exists(scriptPath))
+            {
+                qDebug() << "ERROR: Script not found!";
+                break;
+            }
+
+            // Setup process
+            process.setProgram("python");
+            process.setArguments(QStringList()
+                                 << scriptPath
+                                 << "arg1"
+                                 << "arg2");
+
+            // Get the working directory
+            process.setWorkingDirectory(QFileInfo(scriptPath).absolutePath());
+
+            // Start the actual process
+            process.start();
+
+            // Wait for the process to finish, if it doesn't, produce an error.
+            if (!process.waitForFinished(5000))
+            {
+                qDebug() << "Python process failed:" << process.errorString();
+            }
+
+            // Display script contents
+            qDebug() << "" << process.readAllStandardOutput();
+
             break;
         }
 
-        // Setup process
-        process.setProgram("python");
-        process.setArguments(QStringList()
-                             << scriptPath
-                             << "arg1"
-                             << "arg2");
-
-        // Get the working directory
-        process.setWorkingDirectory(QFileInfo(scriptPath).absolutePath());
-
-        // Start the actual process
-        process.start();
-
-        // Wait for the process to finish, if it doesn't, produce an error.
-        if (!process.waitForFinished(5000))
-        {
-            qDebug() << "Python process failed:" << process.errorString();
-        }
-
-        // Display script contents
-        qDebug() << "" << process.readAllStandardOutput();
-
-        break;
-    }
-
-    case 2:
-        // Process using Algorithm 2
-        QMessageBox::information(this, "", "This is a placeholder for Algorithm 2.");
-        break;
-    case 3:
-        // Process using Algorithm 3
-        QMessageBox::information(this, "", "This is a placeholder for Algorithm 3.");
-        break;
-    case 4:
-        // Process using Algorithm 4
-        QMessageBox::information(this, "", "This is a placeholder for Algorithm 4.");
-        break;
-    default:
-        // If no algorithm was selected, ask the user to select one.
-        qDebug() << "Algorithm not selected.";
-        QMessageBox::warning(this, "Error", "Please select an algorithm.");
-        return;
+        case 2:
+            // Process using Algorithm 2
+            QMessageBox::information(this, "", "This is a placeholder for Algorithm 2.");
+            break;
+        case 3:
+            // Process using Algorithm 3
+            QMessageBox::information(this, "", "This is a placeholder for Algorithm 3.");
+            break;
+        case 4:
+            // Process using Algorithm 4
+            QMessageBox::information(this, "", "This is a placeholder for Algorithm 4.");
+            break;
+        default:
+            // If no algorithm was selected, ask the user to select one.
+            qDebug() << "Algorithm not selected.";
+            QMessageBox::warning(this, "Error", "Please select an algorithm.");
+            return;
     }
 }
 
