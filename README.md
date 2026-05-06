@@ -1,36 +1,27 @@
 # CS498-Capstone-Project
 Collaborative project using Machine Learning (ML) to process facial recognition using an uploaded image, or ideally, a live video feed.
 
+# Features
+The application includes 5 major options for use. The 'Upload Image' button allows for a file upload. The 'Use Video Feed' button attempts to connect to a webcam for the purpose
+of live video stream input. The 'Select Test Algorithm' drop down allows for the user to choose a facial recognition algorithm to choose from. The 'Process Image' button
+executes the chosen algorithm. 'View Results' displays the results of the algorithm.
+
 # Libraries / Sources
 UI Development: <br>
 https://www.qt.io/development <br>
 Scope of use: QT Educational End User License, not for commericial, military, or defense use or implimentation
 <br>
 
-## Machine Learning:
-### Website/Company:
+## Modules/Algorithms:
 https://www.insightface.ai/ <br>
 https://github.com/HyperInspire/InspireFace <br>
-https://github.com/exadel-inc/CompreFace <br>
-https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector <br>
-
-### Research Paper Based:
-https://github.com/Xiaoccer/MobileFaceNet_Pytorch <br>
-https://github.com/wy1iu/sphereface <br>
-
-### Library:
-https://github.com/ShiqiYu/libfacedetection <br>
-https://github.com/davisking/dlib?tab=BSL-1.0-1-ov-file <br>
-https://opencv.org/ <br>
+https://github.com/timesler/facenet-pytorch <br>
 https://github.com/serengil/deepface <br>
+https://opencv.org/ <br>
+https://cmake.org/ <br>
+
 
 <br>
-TEMP: REMOVE LATER <br>
-Add to source code the following:
-
-CMake - Cross Platform Makefile Generator
-Copyright 2000-2021 Kitware, Inc. and Contributors
-All rights reserved.
 
 
 
