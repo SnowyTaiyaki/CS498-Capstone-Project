@@ -1,3 +1,7 @@
+#CMake - Cross Platform Makefile Generator
+#Copyright 2000-2021 Kitware, Inc. and Contributors
+#All rights reserved.
+
 cmake_minimum_required(VERSION 3.16)
 
 project(ImageGUI VERSION 0.1 LANGUAGES CXX)
