@@ -22,7 +22,11 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        algorithms/DFtester.py algorithms/FNtester.py algorithms/IFtester.py algorithms/ProgramDescriptions.txt
+        algorithms/DFtester.py
+        algorithms/FNtester.py
+        algorithms/IFtester.py
+        algorithms/ProgramDescriptions.txt
+        HelloWorld.py
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -35,9 +39,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
 
         HelloWorld.py
-        DFtester.py
-        IFtester.py
-        FNtester.py
+        algorithms/DFtester.py
+        algorithms/IFtester.py
+        algorithms/FNtester.py
+        tdb/control/images.jpeg
 
 
     )

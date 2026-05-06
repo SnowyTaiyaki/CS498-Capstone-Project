@@ -286,6 +286,7 @@ void MainWindow::processImage()
 
     // Make sure the process has time to start
     process.waitForFinished(5000);
+    QString venvPath = "/home/foster/capstone/bin/python3";
 
     QString selectedAlgorithm = comboBox->currentText();
 
@@ -320,8 +321,11 @@ void MainWindow::processImage()
             }
 
             // Setup process
-            process.setProgram("python");
+
+            process.setProgram(venvPath);
+            //process.setProcessChannelMode(QProcess::MergedChannels);
             process.setArguments(QStringList()
+                                 << "-u"
                                  << scriptPath
                                  << currentImagePath
                                 );
@@ -333,7 +337,7 @@ void MainWindow::processImage()
             process.start();
 
             // Wait for the process to finish, if it doesn't, produce an error.
-            if (!process.waitForFinished(5000))
+            if (!process.waitForFinished(30000))
             {
                 qDebug() << "Python process failed:" << process.errorString();
             }
@@ -357,7 +361,7 @@ void MainWindow::processImage()
             dir.cdUp();
 
             // Point to Python script
-            QString scriptPath = dir.filePath("FNtester.py");
+            QString scriptPath = dir.filePath("algorithms/FNtester.py");
             scriptPath = QDir::cleanPath(scriptPath);
 
             // Display script location
@@ -372,8 +376,9 @@ void MainWindow::processImage()
             }
 
             // Setup process
-            process.setProgram("python");
+            process.setProgram(venvPath);
             process.setArguments(QStringList()
+                                 << "-u"
                                  << scriptPath
                                  << currentImagePath
                                  );
@@ -407,7 +412,7 @@ void MainWindow::processImage()
             dir.cdUp();
 
             // Point to Python script
-            QString scriptPath = dir.filePath("IFtester.py");
+            QString scriptPath = dir.filePath("algorithms/IFtester.py");
             scriptPath = QDir::cleanPath(scriptPath);
 
             // Display script location
@@ -422,7 +427,7 @@ void MainWindow::processImage()
             }
 
             // Setup process
-            process.setProgram("python");
+            process.setProgram(venvPath);
             process.setArguments(QStringList()
                                  << scriptPath
                                  << currentImagePath

@@ -83,4 +83,4 @@ if __name__ == "__main__":
         print("########" + sys.argv[1])
         detectFace(sys.argv[1])
     else:
-        detectFace("test-images/images.jpeg")
+        detectFace("/home/foster/CS498-Capstone-Project/tdb/control/images.jpeg")
