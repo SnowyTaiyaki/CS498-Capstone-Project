@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        algorithms/DFtester.py algorithms/FNtester.py algorithms/IFtester.py algorithms/ProgramDescriptions.txt
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

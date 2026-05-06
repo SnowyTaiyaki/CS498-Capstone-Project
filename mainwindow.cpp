@@ -304,7 +304,7 @@ void MainWindow::processImage()
             dir.cdUp();
 
             // Point to Python script
-            QString scriptPath = dir.filePath("DFtester.py");
+            QString scriptPath = dir.filePath("algorithms/DFtester.py");
             scriptPath = QDir::cleanPath(scriptPath);
 
             // Display script location
