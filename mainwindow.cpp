@@ -87,36 +87,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(processButton, &QPushButton::clicked, this, &MainWindow::processImage);     // Test with selected machine learning algorithm when clicked
     connect(resultsButton, &QPushButton::clicked, this, &MainWindow::openResults);      // View test results when clicked
 
-    // Capture from camera when clicked
-    connect(imageCapture, &QImageCapture::imageCaptured,
-            this, [=](int, const QImage &image)
+    connect(captureButton, &QPushButton::clicked, this, [=]()
             {
-                // Turn captured frame into pixmap
-                QPixmap pixmap = QPixmap::fromImage(image);
-
-                // Make sure it exists
-                if (!pixmap.isNull())
+                if (!imageCapture)
                 {
-                    // Store the original image for future use
-                    originalPixmap = pixmap;
-
-                    // Display captured image
-                    imageLabel->setPixmap(originalPixmap.scaled(
-                        imageLabel->size(),
-                        Qt::KeepAspectRatio,
-                        Qt::SmoothTransformation
-                        ));
+                    qDebug() << "ImageCapture not initialized";
+                    return;
                 }
 
-                // Detach video
-                captureSession->setVideoOutput(nullptr);
+                if (!imageCapture->isReadyForCapture())
+                {
+                    qDebug() << "Camera not ready";
+                    return;
+                }
 
-                // Stop camera
-                camera->stop();
-
-                // Change UI back to image viewer
-                videoWidget->hide();
-                imageLabel->show();
+                imageCapture->capture();
             });
 }
 
@@ -190,64 +175,75 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 // Display camera feed
 void MainWindow::openVideo()
 {
-    // Switch from image display to camera display
     imageLabel->hide();
     videoWidget->show();
 
-    // Create camera pipeline
     if (!camera)
     {
         // Initialize camera
         camera = new QCamera(this);
 
-        // Initialize capturing
+        // Initialize image capture
         imageCapture = new QImageCapture(this);
+
+        // Connect camera and video to video session
         captureSession = new QMediaCaptureSession(this);
 
-        // Set the camera
+        // Attach camera and image capture to video session
         captureSession->setCamera(camera);
-
-        // Set image capturing
         captureSession->setImageCapture(imageCapture);
 
-        // Set where the video output should go
-        captureSession->setVideoOutput(videoWidget);
-
-        // Connect capture signal to handler
+        // Connect the captured image to handler
         connect(imageCapture, &QImageCapture::imageCaptured,
                 this, &MainWindow::onImageCaptured);
     }
 
-    // Start camera
+    //Connect capture session to video widget
+    captureSession->setVideoOutput(videoWidget);
+
+    // Start camera feed
     camera->start();
 }
 
 // Handles image captured from camera
 void MainWindow::onImageCaptured(int, const QImage &image)
 {
+    // Turn captured photo into a pixmap for display
     QPixmap pixmap = QPixmap::fromImage(image);
 
-    // Display captured image
+    // Make sure the image exists
     if (!pixmap.isNull())
     {
+        // Store original image for scaling
         originalPixmap = pixmap;
 
+        // Display image in main UI window
         imageLabel->setPixmap(originalPixmap.scaled(
             imageLabel->size(),
             Qt::KeepAspectRatio,
             Qt::SmoothTransformation
             ));
+
+        // Save image to disk for use later
+        QString savePath = QCoreApplication::applicationDirPath() + "/captured.jpg";
+        image.save(savePath);
+
+        // Update image path to use the photo taken
+        currentImagePath = savePath;
+
+        // Display path of image
+        qDebug() << "Saved captured image to:" << savePath;
     }
 
-    // Stop camera
+    // Stop camera if running
     if (camera)
         camera->stop();
 
-    // Detach video
+    // Disconnect video output
     if (captureSession)
         captureSession->setVideoOutput(nullptr);
 
-    // Switch UI back to image view
+    // Switch back to image display from camera feed
     QTimer::singleShot(0, this, [=]()
                        {
                            videoWidget->hide();
@@ -282,8 +278,13 @@ void MainWindow::stopCamera()
 // Start the machine learning testing of the image
 void MainWindow::processImage()
 {
+    // Initialize process
     QProcess process;
+
+    // Start the process
     process.start();
+
+    // Make sure the process has time to start
     process.waitForFinished(5000);
 
     QString selectedAlgorithm = comboBox->currentText();

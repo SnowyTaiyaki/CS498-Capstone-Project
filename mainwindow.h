@@ -6,6 +6,10 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QCamera>
+#include <QMediaCaptureSession>
+#include <QVideoWidget>
+#include <QImageCapture>
 
 namespace Ui {class MainWindow;}
 
@@ -25,8 +29,10 @@ public:
 private slots:
     void openImage();               // Allows user to select an image and then displays the selected image
     void openVideo();               // Allows the user to use video instead of image
-    void processImage();               // Allows the user to test the with machine learning
+    void processImage();            // Allows the user to test with machine learning
     void openResults();             // Allows the user to open the results window
+    void stopCamera();              // Stop the camera
+    void onImageCaptured(int id, const QImage &image);         // Allow image to be captured from camera
 
 private:
     Ui::MainWindow *ui;
@@ -39,14 +45,20 @@ private:
 
     QPushButton *uploadButton;      // Allows the user to upload an image
     QPushButton *videoButton;       // Allow to user to turn on video
-    QPushButton *processButton;        // Allow the user to begin testing with machine learning
+    QPushButton *processButton;     // Allow the user to begin testing with machine learning
     QPushButton *resultsButton;     // Allow the user to view the results after the image has been tested
+    QPushButton *captureButton;      // Allow the user to take a photo from video feed
 
     QLabel      *imageLabel;        // Label used to display the image
 
     QPixmap originalPixmap;         // Unscaled original image
 
     QString currentImagePath;       // Current image path
+
+    QCamera *camera = nullptr;                          // Camera
+    QMediaCaptureSession *captureSession = nullptr;     // Video session
+    QVideoWidget *videoWidget = nullptr;                // Video widget
+    QImageCapture *imageCapture = nullptr;              // Allow image capture from video
 
 protected:
     // Allow the image to be scaled
