@@ -8,6 +8,11 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QCoreApplication>
+#include <QCamera>
+#include <QMediaCaptureSession>
+#include <QVideoWidget>
+#include <QImageCapture>
+#include <QTimer>
 
 // Initializes main window and UI components
 MainWindow::MainWindow(QWidget *parent)
@@ -23,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     imageLabel = new QLabel(this);
     imageLabel->setText("No image loaded.");
 
+    videoWidget = new QVideoWidget(this);
+    videoWidget->setMinimumSize(200, 200);
+    videoWidget->hide();
+
     // Center the text
     imageLabel->setAlignment(Qt::AlignCenter);
 
@@ -35,6 +44,12 @@ MainWindow::MainWindow(QWidget *parent)
     videoButton = new QPushButton("Use Video Feed", this);
     processButton = new QPushButton("Process Image", this);
     resultsButton = new QPushButton("View Results", this);
+    captureButton = new QPushButton("Take Picture", this);
+
+    // Create image capture variables
+    imageCapture = nullptr;
+    camera = nullptr;
+    captureSession = nullptr;
 
     // Create the dropdown box (combobox)
     comboBox = new QComboBox(this);
@@ -46,15 +61,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Populate the combobox
     comboBox->addItem("Select Test Algorithm");
-    comboBox->addItem("Algorithm 1");
-    comboBox->addItem("Algorithm 2");
-    comboBox->addItem("Algorithm 3");
-    comboBox->addItem("Algorithm 4");
+    comboBox->addItem("DeepFace");
+    comboBox->addItem("FaceNet");
+    comboBox->addItem("InspireFace");
 
     // Add the buttons and combobox to the layout
     mainLayout->addWidget(imageLabel);
+    mainLayout->addWidget(videoWidget);
     mainLayout->addWidget(uploadButton);
     mainLayout->addWidget(videoButton);
+    mainLayout->addWidget(captureButton);
     mainLayout->addWidget(comboBox);
     mainLayout->addWidget(processButton);
     mainLayout->addWidget(resultsButton);
@@ -70,6 +86,38 @@ MainWindow::MainWindow(QWidget *parent)
     connect(videoButton, &QPushButton::clicked, this, &MainWindow::openVideo);          // Turn on video when clicked
     connect(processButton, &QPushButton::clicked, this, &MainWindow::processImage);     // Test with selected machine learning algorithm when clicked
     connect(resultsButton, &QPushButton::clicked, this, &MainWindow::openResults);      // View test results when clicked
+
+    // Capture from camera when clicked
+    connect(imageCapture, &QImageCapture::imageCaptured,
+            this, [=](int, const QImage &image)
+            {
+                // Turn captured frame into pixmap
+                QPixmap pixmap = QPixmap::fromImage(image);
+
+                // Make sure it exists
+                if (!pixmap.isNull())
+                {
+                    // Store the original image for future use
+                    originalPixmap = pixmap;
+
+                    // Display captured image
+                    imageLabel->setPixmap(originalPixmap.scaled(
+                        imageLabel->size(),
+                        Qt::KeepAspectRatio,
+                        Qt::SmoothTransformation
+                        ));
+                }
+
+                // Detach video
+                captureSession->setVideoOutput(nullptr);
+
+                // Stop camera
+                camera->stop();
+
+                // Change UI back to image viewer
+                videoWidget->hide();
+                imageLabel->show();
+            });
 }
 
 // Destructor
@@ -107,6 +155,7 @@ void MainWindow::openImage()
                 Qt::SmoothTransformation
             ));
 
+            // Clear text
             imageLabel->setText("");
         }
 
@@ -138,15 +187,104 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     }
 }
 
-// Display the user's camera feed
+// Display camera feed
 void MainWindow::openVideo()
 {
-    QMessageBox::information(this, "", "This is a placeholder for the video button.");
+    // Switch from image display to camera display
+    imageLabel->hide();
+    videoWidget->show();
+
+    // Create camera pipeline
+    if (!camera)
+    {
+        // Initialize camera
+        camera = new QCamera(this);
+
+        // Initialize capturing
+        imageCapture = new QImageCapture(this);
+        captureSession = new QMediaCaptureSession(this);
+
+        // Set the camera
+        captureSession->setCamera(camera);
+
+        // Set image capturing
+        captureSession->setImageCapture(imageCapture);
+
+        // Set where the video output should go
+        captureSession->setVideoOutput(videoWidget);
+
+        // Connect capture signal to handler
+        connect(imageCapture, &QImageCapture::imageCaptured,
+                this, &MainWindow::onImageCaptured);
+    }
+
+    // Start camera
+    camera->start();
+}
+
+// Handles image captured from camera
+void MainWindow::onImageCaptured(int, const QImage &image)
+{
+    QPixmap pixmap = QPixmap::fromImage(image);
+
+    // Display captured image
+    if (!pixmap.isNull())
+    {
+        originalPixmap = pixmap;
+
+        imageLabel->setPixmap(originalPixmap.scaled(
+            imageLabel->size(),
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation
+            ));
+    }
+
+    // Stop camera
+    if (camera)
+        camera->stop();
+
+    // Detach video
+    if (captureSession)
+        captureSession->setVideoOutput(nullptr);
+
+    // Switch UI back to image view
+    QTimer::singleShot(0, this, [=]()
+                       {
+                           videoWidget->hide();
+                           imageLabel->show();
+                       });
+}
+
+// Destroys the camera
+void MainWindow::stopCamera()
+{
+    // Detach video
+    if (captureSession)
+        captureSession->setVideoOutput(nullptr);
+
+    // Stop camera
+    if (camera)
+        camera->stop();
+
+    // Hide video widget
+    videoWidget->hide();
+
+    // Delete video widget
+    videoWidget->deleteLater();
+
+    // Recreate video widget
+    videoWidget = new QVideoWidget(this);
+
+    // Insert the new video widget
+    mainLayout->insertWidget(1, videoWidget);
 }
 
 // Start the machine learning testing of the image
 void MainWindow::processImage()
 {
+    QProcess process;
+    process.start();
+    process.waitForFinished(5000);
 
     QString selectedAlgorithm = comboBox->currentText();
 
@@ -155,6 +293,7 @@ void MainWindow::processImage()
 
         case 1:
         {
+            // Process using Algorithm 1 (DeepFace)
             QProcess process;
 
             // Get executable directory
@@ -165,7 +304,7 @@ void MainWindow::processImage()
             dir.cdUp();
 
             // Point to Python script
-            QString scriptPath = dir.filePath("HelloWorld.py");
+            QString scriptPath = dir.filePath("DFtester.py");
             scriptPath = QDir::cleanPath(scriptPath);
 
             // Display script location
@@ -183,8 +322,8 @@ void MainWindow::processImage()
             process.setProgram("python");
             process.setArguments(QStringList()
                                  << scriptPath
-                                 << "arg1"
-                                 << "arg2");
+                                 << currentImagePath
+                                );
 
             // Get the working directory
             process.setWorkingDirectory(QFileInfo(scriptPath).absolutePath());
@@ -205,17 +344,106 @@ void MainWindow::processImage()
         }
 
         case 2:
-            // Process using Algorithm 2
-            QMessageBox::information(this, "", "This is a placeholder for Algorithm 2.");
+        {
+            // Process using Algorithm 2 (FaceNet)
+            QProcess process;
+
+            // Get executable directory
+            QDir dir(QCoreApplication::applicationDirPath());
+
+            // Move to the directory the algorithm is in
+            dir.cdUp();
+            dir.cdUp();
+
+            // Point to Python script
+            QString scriptPath = dir.filePath("FNtester.py");
+            scriptPath = QDir::cleanPath(scriptPath);
+
+            // Display script location
+            qDebug() << "Running Python script:";
+            qDebug() << scriptPath;
+
+            // Chcek if the script exists
+            if (!QFile::exists(scriptPath))
+            {
+                qDebug() << "ERROR: Script not found!";
+                break;
+            }
+
+            // Setup process
+            process.setProgram("python");
+            process.setArguments(QStringList()
+                                 << scriptPath
+                                 << currentImagePath
+                                 );
+
+            // Get the working directory
+            process.setWorkingDirectory(QFileInfo(scriptPath).absolutePath());
+
+            // Start the actual process
+            process.start();
+
+            // Wait for the process to finish, if it doesn't, produce an error.
+            if (!process.waitForFinished(5000))
+            {
+                qDebug() << "Python process failed:" << process.errorString();
+            }
+
+            // Display script contents
+            qDebug() << "" << process.readAllStandardOutput();
             break;
+        }
         case 3:
-            // Process using Algorithm 3
-            QMessageBox::information(this, "", "This is a placeholder for Algorithm 3.");
+        {
+            // Process using Algorithm 3 (InspireFace)
+            QProcess process;
+
+            // Get executable directory
+            QDir dir(QCoreApplication::applicationDirPath());
+
+            // Move to the directory the algorithm is in
+            dir.cdUp();
+            dir.cdUp();
+
+            // Point to Python script
+            QString scriptPath = dir.filePath("IFtester.py");
+            scriptPath = QDir::cleanPath(scriptPath);
+
+            // Display script location
+            qDebug() << "Running Python script:";
+            qDebug() << scriptPath;
+
+            // Chcek if the script exists
+            if (!QFile::exists(scriptPath))
+            {
+                qDebug() << "ERROR: Script not found!";
+                break;
+            }
+
+            // Setup process
+            process.setProgram("python");
+            process.setArguments(QStringList()
+                                 << scriptPath
+                                 << currentImagePath
+                                 );
+
+            // Get the working directory
+            process.setWorkingDirectory(QFileInfo(scriptPath).absolutePath());
+
+            // Start the actual process
+            process.start();
+
+            // Wait for the process to finish, if it doesn't, produce an error.
+            if (!process.waitForFinished(5000))
+            {
+                qDebug() << "Python process failed:" << process.errorString();
+            }
+
+            // Display script contents
+            qDebug() << "" << process.readAllStandardOutput();
+
             break;
-        case 4:
-            // Process using Algorithm 4
-            QMessageBox::information(this, "", "This is a placeholder for Algorithm 4.");
-            break;
+        }
         default:
             // If no algorithm was selected, ask the user to select one.
             qDebug() << "Algorithm not selected.";
