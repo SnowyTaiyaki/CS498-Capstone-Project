@@ -21,8 +21,9 @@ https://opencv.org/ <br>
 https://cmake.org/ <br>
 
 # Project Notes
-The python algorithms DFtester and IFtester can both be run on their own, and show results. DF (DeepFace) produces a terminal output with the anaylsis function as demonstrated. IF (InspireFace) produces an image overlay with all the landmarking noted.
-Two separate python environments should be set up: 1 for DF and IF and one for FN (FaceNet). This is due to FN requiring a numpy version lower than 2.0 which goes against python 3.12 standards and so an older version of python is needed. That being said, the software may still run into general issues even with the fully separate environment.
+The python algorithms DFtester and IFtester can both be run on their own, and show results. DF (DeepFace) produces a terminal output with the anaylsis function as demonstrated. IF (InspireFace) produces an image overlay with all the landmarking noted. <br>
+Two separate python environments should be set up: 1 for DF and IF and one for FN (FaceNet). This is due to FN requiring a numpy version lower than 2.0 which goes against python 3.12 standards and so an older version of python is needed. That being said, the software may still run into general issues even with the fully separate environment. <br>
+Additionally, IF does not work on windows nor have a windows variant. <br>
 
 modules to install: opencv-python, deepface, inspireface, torch (pytorch), facenet-pytorch, tf-keras, numpy
 
